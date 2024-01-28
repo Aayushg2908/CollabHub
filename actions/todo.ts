@@ -95,3 +95,22 @@ export const joinTodoRoom = async (roomId: string) => {
     },
   });
 };
+
+export const getTodoRoomById = async (roomId: string) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const room = await db.room.findUnique({
+    where: {
+      id: roomId,
+      type: "TODO",
+    },
+  });
+  if (!room) {
+    return redirect("/404");
+  }
+
+  return room;
+};
