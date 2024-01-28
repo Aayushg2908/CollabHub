@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const createTodoRoom = async (roomName: string) => {
+export const createTextEditorRoom = async (roomName: string) => {
   const { userId } = auth();
   if (!userId) {
     return redirect("/sign-in");
@@ -15,7 +15,7 @@ export const createTodoRoom = async (roomName: string) => {
     data: {
       name: roomName,
       ownerId: userId,
-      type: "TODO",
+      type: "TEXTEDITOR",
       users: {
         set: [userId],
       },
@@ -25,12 +25,12 @@ export const createTodoRoom = async (roomName: string) => {
     },
   });
 
-  revalidatePath("/todo");
+  revalidatePath("/texteditor");
 
   return createdRoom;
 };
 
-export const getOwnedTodoRooms = async () => {
+export const getOwnedTextEditorRooms = async () => {
   const { userId } = auth();
   if (!userId) {
     return redirect("/sign-in");
@@ -39,14 +39,14 @@ export const getOwnedTodoRooms = async () => {
   const rooms = await db.room.findMany({
     where: {
       ownerId: userId,
-      type: "TODO",
+      type: "TEXTEDITOR",
     },
   });
 
   return rooms;
 };
 
-export const getAllTodoRooms = async () => {
+export const getAllTextEditorRooms = async () => {
   const { userId } = auth();
   if (!userId) {
     return redirect("/sign-in");
@@ -57,14 +57,14 @@ export const getAllTodoRooms = async () => {
       users: {
         has: userId,
       },
-      type: "TODO",
+      type: "TEXTEDITOR",
     },
   });
 
   return rooms;
 };
 
-export const joinTodoRoom = async (roomId: string) => {
+export const joinTextEditorRoom = async (roomId: string) => {
   const { userId } = auth();
   if (!userId) {
     return redirect("/sign-in");
@@ -76,7 +76,7 @@ export const joinTodoRoom = async (roomId: string) => {
     },
   });
   if (!room) {
-    return redirect("/404");
+    return redirect("/texteditor");
   }
 
   const userAlreadyInRoom = room.users.includes(userId);

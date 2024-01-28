@@ -79,6 +79,11 @@ export const joinWhiteboardRoom = async (roomId: string) => {
     return redirect("/whiteboard");
   }
 
+  const userAlreadyInRoom = room.users.includes(userId);
+  if (userAlreadyInRoom) {
+    return;
+  }
+
   await db.room.update({
     where: {
       id: roomId,
