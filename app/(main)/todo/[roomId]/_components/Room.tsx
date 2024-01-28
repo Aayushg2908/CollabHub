@@ -4,8 +4,8 @@ import Cursor from "@/components/Cursor";
 import { Loading } from "@/components/Loading";
 import {
   RoomProvider,
-  useMyPresence,
   useOthers,
+  useOthersMapped,
   useUpdateMyPresence,
 } from "@/liveblocks.config";
 import { LiveList } from "@liveblocks/client";
@@ -36,8 +36,11 @@ export const Room = ({ room }: { room: PrismaRoom }) => {
 };
 
 const MainRoom = () => {
-  const others = useOthers();
-  const [{ cursor }, updateMyPresence] = useMyPresence();
+  const others = useOthersMapped((other) => ({
+    cursor: other.presence.cursor,
+    info: other.info,
+  }));
+  const updateMyPresence = useUpdateMyPresence();
 
   return (
     <main
@@ -58,17 +61,18 @@ const MainRoom = () => {
       }
       className="relative flex h-screen w-full items-center justify-center overflow-hidden"
     >
-      {others.map(({ connectionId, presence }) => {
-        if (presence == null || !presence.cursor) {
+      {others.map(([id, other]) => {
+        if (other.cursor == null) {
           return null;
         }
 
         return (
           <Cursor
-            key={connectionId}
-            color={COLORS[connectionId % COLORS.length]}
-            x={presence.cursor.x}
-            y={presence.cursor.y}
+            key={id}
+            color={COLORS[id % COLORS.length]}
+            x={other.cursor.x}
+            y={other.cursor.y}
+            name={other.info?.name}
           />
         );
       })}

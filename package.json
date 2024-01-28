@@ -13,6 +13,7 @@
     "@clerk/nextjs": "^4.29.5",
     "@clerk/themes": "^1.7.9",
     "@liveblocks/client": "^1.9.7",
+    "@liveblocks/node": "^1.9.7",
     "@liveblocks/react": "^1.9.7",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.8.1",

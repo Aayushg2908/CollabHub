@@ -2,8 +2,8 @@ import { createClient, LiveList, LiveObject } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
-  publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!,
   throttle: 16,
+  authEndpoint: "/api/liveblocks-auth",
 });
 
 type Presence = {
@@ -24,6 +24,13 @@ type Todo = {
   checked?: boolean;
 };
 
+type UserMeta = {
+  id: string;
+  info: {
+    name: string;
+  };
+};
+
 export const {
   suspense: {
     RoomProvider,
@@ -33,5 +40,6 @@ export const {
     useUpdateMyPresence,
     useMutation,
     useMyPresence,
+    useOthersMapped,
   },
 } = createRoomContext<Presence, Storage>(client);
