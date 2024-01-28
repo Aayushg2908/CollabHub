@@ -43,9 +43,14 @@ export default function Home() {
         className="font-bold text-3xl sm:text-5xl md:text-6xl text-center"
       >
         Welcome to{" "}
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12c2e9] via-[#c471ed] to-[#f64f59]">
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+          className="bg-clip-text text-transparent bg-gradient-to-r from-[#12c2e9] via-[#c471ed] to-[#f64f59]"
+        >
           CollabHub
-        </span>
+        </motion.span>
       </motion.h1>
       <motion.p
         initial={{ opacity: 0 }}
