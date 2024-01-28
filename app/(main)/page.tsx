@@ -75,7 +75,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: (index + 1) * 0.5 }}
+              transition={{ duration: 1, delay: index * 0.3 }}
               key={index}
             >
               <Card
