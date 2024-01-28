@@ -1,6 +1,6 @@
 "use client";
 
-import { createTextEditorRoom } from "@/actions/texteditor";
+import { createCodeEditorRoom } from "@/actions/codeeditor";
 import { createTodoRoom } from "@/actions/todo";
 import {
   Modal,
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export const CreateTextEditorRoom = () => {
+export const CreateCodeEditorRoom = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [roomName, setRoomName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +60,7 @@ export const CreateTextEditorRoom = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Create Text Editor Room
+                Create Code Editor Room
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -84,9 +84,9 @@ export const CreateTextEditorRoom = () => {
                       );
                     }
                     try {
-                      const room = await createTextEditorRoom(roomName);
+                      const room = await createCodeEditorRoom(roomName);
                       toast.success("Room created successfully!");
-                      router.push(`/texteditor/${room.id}`);
+                      router.push(`/codeeditor/${room.id}`);
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

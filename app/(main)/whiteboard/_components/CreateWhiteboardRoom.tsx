@@ -86,7 +86,7 @@ export const CreateWhiteboardRoom = () => {
                     try {
                       const room = await createWhiteboardRoom(roomName);
                       toast.success("Room created successfully!");
-                      router.push(`/todo/${room.id}`);
+                      router.push(`/whiteboard/${room.id}`);
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {
