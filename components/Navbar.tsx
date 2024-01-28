@@ -38,7 +38,16 @@ export const MainNavbar = () => {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar
+      motionProps={{
+        initial: { y: -100, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { duration: 1 },
+      }}
+      onMenuOpenChange={setIsMenuOpen}
+      shouldHideOnScroll
+      isBordered
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
