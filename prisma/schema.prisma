@@ -16,7 +16,7 @@ enum ROOMTYPE {
 
 model Room {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  ownerId String   @unique
+  ownerId String
   name    String
   type    ROOMTYPE
   users   String[]
