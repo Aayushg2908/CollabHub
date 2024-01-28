@@ -1,6 +1,7 @@
 "use client";
 
 import { createTodoRoom } from "@/actions/todo";
+import { createWhiteboardRoom } from "@/actions/whiteboard";
 import {
   Modal,
   ModalContent,
@@ -16,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export const CreateTodoRoom = () => {
+export const CreateWhiteboardRoom = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [roomName, setRoomName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ export const CreateTodoRoom = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Create Todo Room
+                Create Whiteboard Room
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -83,7 +84,7 @@ export const CreateTodoRoom = () => {
                       );
                     }
                     try {
-                      const room = await createTodoRoom(roomName);
+                      const room = await createWhiteboardRoom(roomName);
                       toast.success("Room created successfully!");
                       router.push(`/todo/${room.id}`);
                     } catch (error) {

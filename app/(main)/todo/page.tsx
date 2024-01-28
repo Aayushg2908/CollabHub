@@ -16,7 +16,7 @@ const TodoPage = async () => {
           <Link
             href={`/todo/${room.id}`}
             key={room.id}
-            className="border bg-neutral-800 transition-all rounded-md w-[150px] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl"
+            className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1"
           >
             {room.name}
           </Link>
@@ -31,7 +31,7 @@ const TodoPage = async () => {
           <Link
             href={`/todo/${room.id}`}
             key={room.id}
-            className="border bg-neutral-800 transition-all rounded-md w-[150px] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl"
+            className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1"
           >
             {room.name}
           </Link>
