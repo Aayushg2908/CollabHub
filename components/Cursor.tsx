@@ -8,12 +8,13 @@ interface Props {
 export default function Cursor({ color, x, y, name }: Props) {
   return (
     <div
-      className="pointer-events-none absolute top-0 left-0"
+      className="absolute top-0 left-0 pointer-events-none"
       style={{
         transform: `translateX(${x}px) translateY(${y}px)`,
       }}
     >
       <svg
+        className="absolute top-0 left-0 -translate-y-10 translate-x-1"
         width="24"
         height="36"
         viewBox="0 0 24 36"
@@ -27,7 +28,7 @@ export default function Cursor({ color, x, y, name }: Props) {
         />
       </svg>
       <div
-        className="absolute top-4 left-2 rounded-xl p-2"
+        className="absolute top-4 left-2 rounded-xl p-2 -translate-y-10"
         style={{ backgroundColor: color }}
       >
         <p className="whitespace-nowrap text-sm leading-relaxed text-white">

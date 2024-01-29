@@ -28,6 +28,7 @@ type UserMeta = {
   id: string;
   info: {
     name: string;
+    avatar: string;
   };
 };
 
