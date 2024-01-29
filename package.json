@@ -10,19 +10,24 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@blocknote/core": "^0.9.5",
+    "@blocknote/react": "^0.9.5",
     "@clerk/nextjs": "^4.29.5",
     "@clerk/themes": "^1.7.9",
     "@liveblocks/client": "^1.9.7",
     "@liveblocks/node": "^1.9.7",
     "@liveblocks/react": "^1.9.7",
+    "@liveblocks/yjs": "^1.9.7",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.8.1",
+    "clsx": "^2.1.0",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.316.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "yjs": "^13.6.11"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -95,7 +95,7 @@ const MainRoom = ({ roomId }: { roomId: string }) => {
       <AvatarGroup className="absolute top-0 mt-32">
         {others.slice(0, 3).map(([id, other]) => {
           return (
-            <Tooltip content={other.info?.name}>
+            <Tooltip key={id} content={other.info?.name}>
               <Avatar
                 key={id}
                 src={other.info?.avatar}

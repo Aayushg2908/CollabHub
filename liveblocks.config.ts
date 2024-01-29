@@ -42,5 +42,6 @@ export const {
     useMutation,
     useMyPresence,
     useOthersMapped,
+    useRoom,
   },
 } = createRoomContext<Presence, Storage>(client);
