@@ -4,6 +4,7 @@ import {
 } from "@/actions/texteditor";
 import Link from "next/link";
 import { CreateTextEditorRoom } from "./_components/CreateTextEditorRoom";
+import { Tooltip } from "@nextui-org/tooltip";
 
 const TextEditorPage = async () => {
   const ownedRooms = await getOwnedTextEditorRooms();
@@ -14,15 +15,19 @@ const TextEditorPage = async () => {
       <h1 className="font-bold text-3xl md:text-5xl text-center">
         Rooms created by you
       </h1>
-      <div className="mt-6 flex items-center gap-x-4 flex-wrap px-10 gap-y-2">
+      <div className="mt-10 flex items-center gap-x-4 flex-wrap px-10 gap-y-2">
         {ownedRooms.map((room) => (
-          <Link
-            href={`/texteditor/${room.id}`}
+          <Tooltip
             key={room.id}
-            className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1"
+            content={`There are ${room.users.length} users in the room`}
           >
-            {room.name}
-          </Link>
+            <Link
+              href={`/texteditor/${room.id}`}
+              className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1"
+            >
+              {room.name}
+            </Link>
+          </Tooltip>
         ))}
         <CreateTextEditorRoom />
       </div>

@@ -4,6 +4,7 @@ import {
 } from "@/actions/whiteboard";
 import Link from "next/link";
 import { CreateWhiteboardRoom } from "./_components/CreateWhiteboardRoom";
+import { Tooltip } from "@nextui-org/tooltip";
 
 const WhiteboardPage = async () => {
   const ownedRooms = await getOwnedWhiteboardRooms();
@@ -16,13 +17,17 @@ const WhiteboardPage = async () => {
       </h1>
       <div className="mt-6 flex items-center gap-x-4 flex-wrap px-10 gap-y-2">
         {ownedRooms.map((room) => (
-          <Link
-            href={`/todo/${room.id}`}
+          <Tooltip
             key={room.id}
-            className="border bg-neutral-800 transition-all rounded-md w-[fit] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1"
+            content={`There are ${room.users.length} users in the room`}
           >
-            {room.name}
-          </Link>
+            <Link
+              href={`/whiteboard/${room.id}`}
+              className="border bg-neutral-800 transition-all rounded-md w-[fit] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1"
+            >
+              {room.name}
+            </Link>
+          </Tooltip>
         ))}
         <CreateWhiteboardRoom />
       </div>
