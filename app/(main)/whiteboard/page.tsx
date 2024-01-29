@@ -37,7 +37,7 @@ const WhiteboardPage = async () => {
       <div className="mt-6 flex items-center gap-x-4 flex-wrap px-10 gap-y-2">
         {allRooms.map((room) => (
           <Link
-            href={`/todo/${room.id}`}
+            href={`/whiteboard/${room.id}`}
             key={room.id}
             className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1"
           >

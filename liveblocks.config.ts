@@ -1,5 +1,6 @@
 import { createClient, LiveList, LiveObject } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
+import LiveblocksProvider from "@liveblocks/yjs";
 
 const client = createClient({
   throttle: 16,
@@ -31,6 +32,15 @@ type UserMeta = {
     avatar: string;
   };
 };
+
+type RoomEvent = {};
+
+export type TypedLiveblocksProvider = LiveblocksProvider<
+  Presence,
+  Storage,
+  UserMeta,
+  RoomEvent
+>;
 
 export const {
   suspense: {
