@@ -1,6 +1,12 @@
-import { createClient, LiveList, LiveObject } from "@liveblocks/client";
+import {
+  createClient,
+  LiveList,
+  LiveMap,
+  LiveObject,
+} from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 import LiveblocksProvider from "@liveblocks/yjs";
+import { Color, Layer } from "./types";
 
 const client = createClient({
   throttle: 16,
@@ -8,15 +14,20 @@ const client = createClient({
 });
 
 type Presence = {
+  selection?: string[];
   isTyping?: boolean;
   cursor: {
     x: number;
     y: number;
   } | null;
+  pencilDraft?: [x: number, y: number, pressure: number][] | null;
+  penColor?: Color | null;
 };
 
 type Storage = {
   todos: LiveList<LiveObject<Todo>>;
+  layers: LiveMap<string, LiveObject<Layer>>;
+  layerIds: LiveList<string>;
 };
 
 type Todo = {

@@ -11,7 +11,8 @@ import {
   useStorage,
   useUpdateMyPresence,
 } from "@/liveblocks.config";
-import { LiveList, LiveObject } from "@liveblocks/client";
+import { Layer } from "@/types";
+import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import {
   Avatar,
@@ -37,6 +38,8 @@ export const Room = ({ room }: { room: PrismaRoom }) => {
       }}
       initialStorage={{
         todos: new LiveList(),
+        layers: new LiveMap<string, LiveObject<Layer>>(),
+        layerIds: new LiveList<string>(),
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>
