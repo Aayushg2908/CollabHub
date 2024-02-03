@@ -4,6 +4,11 @@ export type Color = {
   b: number;
 };
 
+export type Camera = {
+  x: number;
+  y: number;
+};
+
 export enum LayerType {
   Rectangle,
   Ellipse,
@@ -11,11 +16,6 @@ export enum LayerType {
   Text,
   Note,
 }
-
-export type Camera = {
-  x: number;
-  y: number;
-};
 
 export type RectangleLayer = {
   type: LayerType.Rectangle;
@@ -68,13 +68,6 @@ export type NoteLayer = {
   value?: string;
 };
 
-export type Layer =
-  | RectangleLayer
-  | EllipseLayer
-  | PathLayer
-  | TextLayer
-  | NoteLayer;
-
 export type Point = {
   x: number;
   y: number;
@@ -94,16 +87,6 @@ export enum Side {
   Right = 8,
 }
 
-export enum CanvasMode {
-  None,
-  Pressing,
-  SelectionNet,
-  Translating,
-  Inserting,
-  Resizing,
-  Pencil,
-}
-
 export type CanvasState =
   | {
       mode: CanvasMode.None;
@@ -119,7 +102,11 @@ export type CanvasState =
     }
   | {
       mode: CanvasMode.Inserting;
-      layerType: LayerType.Ellipse | LayerType.Rectangle;
+      layerType:
+        | LayerType.Ellipse
+        | LayerType.Rectangle
+        | LayerType.Text
+        | LayerType.Note;
     }
   | {
       mode: CanvasMode.Pencil;
@@ -133,3 +120,20 @@ export type CanvasState =
       initialBounds: XYWH;
       corner: Side;
     };
+
+export enum CanvasMode {
+  None,
+  Pressing,
+  SelectionNet,
+  Translating,
+  Inserting,
+  Resizing,
+  Pencil,
+}
+
+export type Layer =
+  | RectangleLayer
+  | EllipseLayer
+  | PathLayer
+  | TextLayer
+  | NoteLayer;

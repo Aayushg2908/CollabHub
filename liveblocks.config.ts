@@ -64,5 +64,8 @@ export const {
     useMyPresence,
     useOthersMapped,
     useRoom,
+    useCanRedo,
+    useCanUndo,
+    useHistory,
   },
 } = createRoomContext<Presence, Storage>(client);
