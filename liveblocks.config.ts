@@ -14,14 +14,14 @@ const client = createClient({
 });
 
 type Presence = {
-  selection?: string[];
-  isTyping?: boolean;
+  selection: string[];
+  isTyping: boolean;
   cursor: {
     x: number;
     y: number;
   } | null;
-  pencilDraft?: [x: number, y: number, pressure: number][] | null;
-  penColor?: Color | null;
+  pencilDraft: [x: number, y: number, pressure: number][] | null;
+  penColor: Color | null;
 };
 
 type Storage = {

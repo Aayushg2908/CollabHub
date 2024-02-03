@@ -25,7 +25,11 @@ export const Room = ({ roomId }: { roomId: string }) => {
     <RoomProvider
       id={roomId}
       initialPresence={{
+        isTyping: false,
         cursor: null,
+        selection: [],
+        pencilDraft: null,
+        penColor: null,
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>

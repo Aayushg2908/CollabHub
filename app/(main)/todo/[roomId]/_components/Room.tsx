@@ -35,6 +35,9 @@ export const Room = ({ room }: { room: PrismaRoom }) => {
       initialPresence={{
         isTyping: false,
         cursor: null,
+        selection: [],
+        pencilDraft: null,
+        penColor: null,
       }}
       initialStorage={{
         todos: new LiveList(),
