@@ -3,8 +3,10 @@ import { CreateTodoRoom } from "./_components/CreateTodoRoom";
 import Link from "next/link";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Actions } from "@/components/Actions";
+import { auth } from "@clerk/nextjs";
 
 const TodoPage = async () => {
+  const { userId } = auth();
   const ownedRooms = await getOwnedTodoRooms();
   const allRooms = await getAllTodoRooms();
 
@@ -24,7 +26,9 @@ const TodoPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="TODO" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="TODO" />
+              )}
             </Link>
           </Tooltip>
         ))}
@@ -44,7 +48,9 @@ const TodoPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="TODO" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="TODO" />
+              )}
             </Link>
           </Tooltip>
         ))}

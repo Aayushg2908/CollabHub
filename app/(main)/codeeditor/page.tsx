@@ -6,8 +6,10 @@ import Link from "next/link";
 import { CreateCodeEditorRoom } from "./_components/CreateCodeEditorRoom";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Actions } from "@/components/Actions";
+import { auth } from "@clerk/nextjs";
 
 const CodeEditorPage = async () => {
+  const { userId } = auth();
   const ownedRooms = await getOwnedCodeEditorRooms();
   const allRooms = await getAllCodeEditorRooms();
 
@@ -27,7 +29,9 @@ const CodeEditorPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="CODEEDITOR" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="CODEEDITOR" />
+              )}
             </Link>
           </Tooltip>
         ))}
@@ -47,7 +51,9 @@ const CodeEditorPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="CODEEDITOR" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="CODEEDITOR" />
+              )}
             </Link>
           </Tooltip>
         ))}

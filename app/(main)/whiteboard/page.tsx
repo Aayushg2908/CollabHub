@@ -6,8 +6,10 @@ import Link from "next/link";
 import { CreateWhiteboardRoom } from "./_components/CreateWhiteboardRoom";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Actions } from "@/components/Actions";
+import { auth } from "@clerk/nextjs";
 
 const WhiteboardPage = async () => {
+  const { userId } = auth();
   const ownedRooms = await getOwnedWhiteboardRooms();
   const allRooms = await getAllWhiteboardRooms();
 
@@ -27,7 +29,9 @@ const WhiteboardPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md w-[fit] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="WHITEBOARD" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="WHITEBOARD" />
+              )}
             </Link>
           </Tooltip>
         ))}
@@ -48,7 +52,9 @@ const WhiteboardPage = async () => {
               className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1 relative"
             >
               {room.name}
-              <Actions roomId={room.id} type="WHITEBOARD" />
+              {room.ownerId === userId && (
+                <Actions roomId={room.id} type="WHITEBOARD" />
+              )}
             </Link>
           </Tooltip>
         ))}
