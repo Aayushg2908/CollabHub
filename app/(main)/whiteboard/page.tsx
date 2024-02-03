@@ -30,7 +30,11 @@ const WhiteboardPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="WHITEBOARD" />
+                <Actions
+                  roomId={room.id}
+                  type="WHITEBOARD"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>
@@ -53,7 +57,11 @@ const WhiteboardPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="WHITEBOARD" />
+                <Actions
+                  roomId={room.id}
+                  type="WHITEBOARD"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>

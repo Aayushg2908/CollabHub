@@ -27,7 +27,7 @@ const TodoPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="TODO" />
+                <Actions roomId={room.id} type="TODO" roomName={room.name} />
               )}
             </Link>
           </Tooltip>
@@ -49,7 +49,7 @@ const TodoPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="TODO" />
+                <Actions roomId={room.id} type="TODO" roomName={room.name} />
               )}
             </Link>
           </Tooltip>

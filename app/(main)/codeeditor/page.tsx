@@ -30,7 +30,11 @@ const CodeEditorPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="CODEEDITOR" />
+                <Actions
+                  roomId={room.id}
+                  type="CODEEDITOR"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>
@@ -52,7 +56,11 @@ const CodeEditorPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="CODEEDITOR" />
+                <Actions
+                  roomId={room.id}
+                  type="CODEEDITOR"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>

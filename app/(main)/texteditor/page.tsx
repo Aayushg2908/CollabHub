@@ -30,7 +30,11 @@ const TextEditorPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="TEXTEDITOR" />
+                <Actions
+                  roomId={room.id}
+                  type="TEXTEDITOR"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>
@@ -52,7 +56,11 @@ const TextEditorPage = async () => {
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions roomId={room.id} type="TEXTEDITOR" />
+                <Actions
+                  roomId={room.id}
+                  type="TEXTEDITOR"
+                  roomName={room.name}
+                />
               )}
             </Link>
           </Tooltip>
