@@ -472,7 +472,9 @@ const Canvas = ({ roomId }: { roomId: string }) => {
       className="h-screen w-full relative touch-none flex flex-col overflow-hidden"
     >
       <div className="w-full absolute top-0 flex justify-between items-center max-[419px]:flex-col max-[419px]:gap-y-1">
-        <Snippet symbol="">http://localhost:3000/whiteboard/{roomId}</Snippet>
+        <Snippet symbol="">
+          https://collab-hub-one.vercel.app/whiteboard/{roomId}
+        </Snippet>
         <AvatarGroup className="bg-neutral-800 py-2 px-6 rounded-md w-fit">
           {others.slice(0, 3).map(([id, other]) => {
             return (

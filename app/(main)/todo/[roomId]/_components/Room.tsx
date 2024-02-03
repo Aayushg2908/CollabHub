@@ -96,7 +96,7 @@ const MainRoom = ({ roomId }: { roomId: string }) => {
       className="relative flex flex-col h-screen w-full items-center overflow-hidden"
     >
       <Snippet symbol="" className="absolute top-0 mt-10">
-        http://localhost:3000/todo/{roomId}
+        https://collab-hub-one.vercel.app/todo/{roomId}
       </Snippet>
       <AvatarGroup className="absolute top-0 mt-32">
         {others.slice(0, 3).map(([id, other]) => {
