@@ -36,10 +36,6 @@ export const MainNavbar = () => {
       name: "Todo",
       link: "/todo",
     },
-    {
-      name: "Chat",
-      link: "/chat",
-    },
   ];
 
   return (

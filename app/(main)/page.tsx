@@ -38,12 +38,6 @@ export default function Home() {
       description: "A collaborative todo list to mantain your daily tasks.",
       className: "text-green-600",
     },
-    {
-      name: "Chat",
-      icon: MessagesSquare,
-      description: "A collaborative group chat to communicate with your team.",
-      className: "text-yellow-500",
-    },
   ];
 
   return (
