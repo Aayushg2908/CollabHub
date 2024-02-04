@@ -36,6 +36,10 @@ export const MainNavbar = () => {
       name: "Todo",
       link: "/todo",
     },
+    {
+      name: "Chat",
+      link: "/chat",
+    },
   ];
 
   return (
@@ -75,7 +79,7 @@ export const MainNavbar = () => {
             <motion.div
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.5, delay: index * 0.2 }}
+              transition={{ duration: 1.5, delay: index * 0.1 }}
               key={index}
             >
               <NavbarItem>

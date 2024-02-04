@@ -1,6 +1,12 @@
 "use client";
 
-import { Code, ListTodo, Presentation, Type } from "lucide-react";
+import {
+  Code,
+  ListTodo,
+  MessagesSquare,
+  Presentation,
+  Type,
+} from "lucide-react";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { cn } from "@/lib/utils";
@@ -32,6 +38,12 @@ export default function Home() {
       description: "A collaborative todo list to mantain your daily tasks.",
       className: "text-green-600",
     },
+    {
+      name: "Chat",
+      icon: MessagesSquare,
+      description: "A collaborative group chat to communicate with your team.",
+      className: "text-yellow-500",
+    },
   ];
 
   return (
@@ -61,7 +73,7 @@ export default function Home() {
         Your one stop solution for all your collaboration needs. We provide you
         with a platform to collaborate with your friends, family and colleagues.
       </motion.p>
-      <div className="mt-10 flex flex-col items-center gap-y-4">
+      <div className="mt-8 flex flex-col items-center gap-y-4">
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -80,7 +92,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: index * 0.3 }}
+              transition={{ duration: 1, delay: index * 0.2 }}
               key={index}
             >
               <Card
