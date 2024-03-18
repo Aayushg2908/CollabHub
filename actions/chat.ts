@@ -63,3 +63,35 @@ export const getAllChatRooms = async () => {
 
   return rooms;
 };
+
+export const joinChatRoom = async (roomId: string) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const room = await db.room.findUnique({
+    where: {
+      id: roomId,
+    },
+  });
+  if (!room) {
+    return redirect("/chat");
+  }
+
+  const userAlreadyInRoom = room.users.includes(userId);
+  if (userAlreadyInRoom) {
+    return;
+  }
+
+  await db.room.update({
+    where: {
+      id: roomId,
+    },
+    data: {
+      users: {
+        set: [...room.users, userId],
+      },
+    },
+  });
+};
