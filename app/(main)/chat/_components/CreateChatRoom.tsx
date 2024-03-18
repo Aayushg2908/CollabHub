@@ -1,6 +1,6 @@
 "use client";
 
-import { createWhiteboardRoom } from "@/actions/whiteboard";
+import { createChatRoom } from "@/actions/chat";
 import {
   Modal,
   ModalContent,
@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export const CreateWhiteboardRoom = () => {
+export const CreateChatRoom = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [roomName, setRoomName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +59,7 @@ export const CreateWhiteboardRoom = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Create Whiteboard Room
+                Create Chat Room
               </ModalHeader>
               <ModalBody>
                 <Input
@@ -83,9 +83,9 @@ export const CreateWhiteboardRoom = () => {
                       );
                     }
                     try {
-                      const room = await createWhiteboardRoom(roomName);
+                      const room = await createChatRoom(roomName);
                       toast.success("Room created successfully!");
-                      router.push(`/whiteboard/${room.id}`);
+                      router.push(`/chat/${room.id}`);
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

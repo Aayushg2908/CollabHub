@@ -1,17 +1,14 @@
-import {
-  getAllCodeEditorRooms,
-  getOwnedCodeEditorRooms,
-} from "@/actions/codeeditor";
-import Link from "next/link";
-import { CreateCodeEditorRoom } from "./_components/CreateCodeEditorRoom";
-import { Tooltip } from "@nextui-org/tooltip";
-import { Actions } from "@/components/Actions";
 import { auth } from "@clerk/nextjs";
+import { CreateChatRoom } from "./_components/CreateChatRoom";
+import { getAllChatRooms, getOwnedChatRooms } from "@/actions/chat";
+import Link from "next/link";
+import { Actions } from "@/components/Actions";
+import { Tooltip } from "@nextui-org/tooltip";
 
-const CodeEditorPage = async () => {
+const ChatPage = async () => {
   const { userId } = auth();
-  const ownedRooms = await getOwnedCodeEditorRooms();
-  const allRooms = await getAllCodeEditorRooms();
+  const ownedRooms = await getOwnedChatRooms();
+  const allRooms = await getAllChatRooms();
 
   return (
     <div className="mt-10 w-full flex flex-col items-center">
@@ -25,21 +22,17 @@ const CodeEditorPage = async () => {
             content={`There are ${room.users.length} users in the room`}
           >
             <Link
-              href={`/codeeditor/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
+              href={`/chat/${room.id}`}
+              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions
-                  roomId={room.id}
-                  type="CODEEDITOR"
-                  roomName={room.name}
-                />
+                <Actions roomId={room.id} type="CHAT" roomName={room.name} />
               )}
             </Link>
           </Tooltip>
         ))}
-        <CreateCodeEditorRoom />
+        <CreateChatRoom />
       </div>
       <h1 className="mt-16 font-bold text-3xl md:text-5xl text-center">
         Your Rooms
@@ -51,16 +44,13 @@ const CodeEditorPage = async () => {
             content={`There are ${room.users.length} users in the room`}
           >
             <Link
-              href={`/codeeditor/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
+              href={`/chat/${room.id}`}
+              key={room.id}
+              className="border min-w-[120px] bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
-                <Actions
-                  roomId={room.id}
-                  type="CODEEDITOR"
-                  roomName={room.name}
-                />
+                <Actions roomId={room.id} type="CHAT" roomName={room.name} />
               )}
             </Link>
           </Tooltip>
@@ -70,4 +60,4 @@ const CodeEditorPage = async () => {
   );
 };
 
-export default CodeEditorPage;
+export default ChatPage;

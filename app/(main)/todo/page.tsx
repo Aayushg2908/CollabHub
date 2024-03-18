@@ -23,7 +23,7 @@ const TodoPage = async () => {
           >
             <Link
               href={`/todo/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
+              className="border min-w-[120px] bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
@@ -45,7 +45,7 @@ const TodoPage = async () => {
           >
             <Link
               href={`/todo/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
+              className="border min-w-[120px] bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (

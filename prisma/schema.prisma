@@ -12,6 +12,7 @@ enum ROOMTYPE {
   TEXTEDITOR
   CODEEDITOR
   TODO
+  CHAT
 }
 
 model Room {

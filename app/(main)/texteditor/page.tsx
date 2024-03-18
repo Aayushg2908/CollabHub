@@ -26,7 +26,7 @@ const TextEditorPage = async () => {
           >
             <Link
               href={`/texteditor/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
+              className="border bg-neutral-800 transition-all min-w-[120px] rounded-md h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl w-fit p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
@@ -52,7 +52,7 @@ const TextEditorPage = async () => {
           >
             <Link
               href={`/texteditor/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
+              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (

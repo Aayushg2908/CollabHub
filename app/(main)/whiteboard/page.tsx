@@ -26,7 +26,7 @@ const WhiteboardPage = async () => {
           >
             <Link
               href={`/whiteboard/${room.id}`}
-              className="border bg-neutral-800 transition-all rounded-md w-[fit] h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
+              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
@@ -53,7 +53,7 @@ const WhiteboardPage = async () => {
             <Link
               href={`/whiteboard/${room.id}`}
               key={room.id}
-              className="border bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1 relative"
+              className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1 relative"
             >
               {room.name}
               {room.ownerId === userId && (
