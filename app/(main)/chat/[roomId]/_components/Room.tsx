@@ -27,7 +27,13 @@ import { useState } from "react";
 
 const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];
 
-export const Room = ({ roomId }: { roomId: string }) => {
+export const Room = ({
+  roomId,
+  userId,
+}: {
+  roomId: string;
+  userId: string;
+}) => {
   return (
     <RoomProvider
       id={roomId}
@@ -46,18 +52,13 @@ export const Room = ({ roomId }: { roomId: string }) => {
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>
-        {() => <Chat roomId={roomId} />}
+        {() => <Chat roomId={roomId} userId={userId} />}
       </ClientSideSuspense>
     </RoomProvider>
   );
 };
 
-const Chat = ({ roomId }: { roomId: string }) => {
-  const { user } = useUser();
-  if (!user || !user.id) {
-    return null;
-  }
-
+const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
   const [message, setMessage] = useState("");
   const updateMyPresence = useUpdateMyPresence();
   const currentUser = useSelf();
@@ -74,7 +75,7 @@ const Chat = ({ roomId }: { roomId: string }) => {
     storage
       .get("messages")
       .push(
-        new LiveObject({ content: content, roomId: roomId, senderId: user.id })
+        new LiveObject({ content: content, roomId: roomId, senderId: userId })
       );
   }, []);
 
@@ -126,14 +127,14 @@ const Chat = ({ roomId }: { roomId: string }) => {
             <div
               key={index}
               className={`w-full flex ${
-                message.senderId === user.id && "items-end justify-end"
+                message.senderId === userId && "items-end justify-end"
               }`}
             >
               <div
                 className={`${
-                  message.senderId === user.id && "bg-blue-500 text-white"
+                  message.senderId === userId && "bg-blue-500 text-white"
                 } w-fit min-w-[100px] flex items-center justify-center p-3 rounded-full ${
-                  message.senderId !== user.id && "bg-neutral-700 text-white"
+                  message.senderId !== userId && "bg-neutral-700 text-white"
                 }`}
               >
                 {message.content}
