@@ -1,16 +1,13 @@
-"use client";
-
-import {
-  Code,
-  ListTodo,
-  MessagesSquare,
-  Presentation,
-  Type,
-} from "lucide-react";
+import { Code, ListTodo, Presentation, Type } from "lucide-react";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import {
+  MotionDiv,
+  MotionH1,
+  MotionP,
+  MotionSpan,
+} from "@/components/MotionComponent";
 
 export default function Home() {
   const products = [
@@ -42,23 +39,23 @@ export default function Home() {
 
   return (
     <div className="mt-10 w-full flex flex-col items-center gap-y-4 p-10">
-      <motion.h1
+      <MotionH1
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="font-bold text-3xl sm:text-5xl md:text-6xl text-center"
       >
         Welcome to{" "}
-        <motion.span
+        <MotionSpan
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
           className="bg-clip-text text-transparent bg-gradient-to-r from-[#12c2e9] via-[#c471ed] to-[#f64f59]"
         >
           CollabHub
-        </motion.span>
-      </motion.h1>
-      <motion.p
+        </MotionSpan>
+      </MotionH1>
+      <MotionP
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
@@ -66,24 +63,24 @@ export default function Home() {
       >
         Your one stop solution for all your collaboration needs. We provide you
         with a platform to collaborate with your friends, family and colleagues.
-      </motion.p>
+      </MotionP>
       <div className="mt-8 flex flex-col items-center gap-y-4">
-        <motion.h1
+        <MotionH1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 3 }}
           className="font-bold text-2xl sm:text-5xl"
         >
           Products
-        </motion.h1>
-        <motion.div
+        </MotionH1>
+        <MotionDiv
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 4 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           {products.map((product, index) => (
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: index * 0.2 }}
@@ -101,9 +98,9 @@ export default function Home() {
                 <Divider />
                 <CardBody>{product.description}</CardBody>
               </Card>
-            </motion.div>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
       </div>
     </div>
   );

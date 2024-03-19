@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Link } from "@nextui-org/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "@nextui-org/button";
-import { motion } from "framer-motion";
+import { MotionDiv } from "./MotionComponent";
 
 export const MainNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -76,7 +76,7 @@ export const MainNavbar = () => {
       <SignedIn>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {menuItems.map((item, index) => (
-            <motion.div
+            <MotionDiv
               initial={{ y: -50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1.5, delay: index * 0.05 }}
@@ -87,7 +87,7 @@ export const MainNavbar = () => {
                   {item.name}
                 </Link>
               </NavbarItem>
-            </motion.div>
+            </MotionDiv>
           ))}
         </NavbarContent>
       </SignedIn>
