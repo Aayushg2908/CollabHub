@@ -23,7 +23,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];
 
@@ -60,6 +60,7 @@ export const Room = ({
 
 const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
   const [message, setMessage] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
   const updateMyPresence = useUpdateMyPresence();
   const currentUser = useSelf();
   const others = useOthersMapped((other) => ({
@@ -77,6 +78,10 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
       .push(
         new LiveObject({ content: content, roomId: roomId, senderId: userId })
       );
+  }, []);
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
@@ -121,7 +126,7 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
         </AvatarGroup>
       </div>
 
-      <div className="flex flex-col gap-y-2 w-full mt-[80px] px-2">
+      <div className="flex flex-col gap-y-2 w-full mt-[80px] max-[419px]:mt-[150px] px-2">
         {messages.map((message, index) => {
           return (
             <div
@@ -143,6 +148,8 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
           );
         })}
       </div>
+
+      <div ref={ref} />
 
       <div className="w-full px-4 mb-2 bottom-2 fixed flex flex-col gap-y-1">
         <SomeoneIsTyping />
