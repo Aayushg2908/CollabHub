@@ -4,14 +4,26 @@ import Cursor from "@/components/Cursor";
 import { Loading } from "@/components/Loading";
 import {
   RoomProvider,
+  useMutation,
+  useOthers,
   useOthersMapped,
   useSelf,
+  useStorage,
   useUpdateMyPresence,
 } from "@/liveblocks.config";
 import { Layer } from "@/types";
+import { useUser } from "@clerk/nextjs";
 import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
-import { Avatar, AvatarGroup, Snippet, Tooltip } from "@nextui-org/react";
+import {
+  Avatar,
+  AvatarGroup,
+  Input,
+  Snippet,
+  Tooltip,
+} from "@nextui-org/react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
 const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];
 
@@ -30,6 +42,7 @@ export const Room = ({ roomId }: { roomId: string }) => {
         todos: new LiveList(),
         layers: new LiveMap<string, LiveObject<Layer>>(),
         layerIds: new LiveList(),
+        messages: new LiveList(),
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>
@@ -40,12 +53,30 @@ export const Room = ({ roomId }: { roomId: string }) => {
 };
 
 const Chat = ({ roomId }: { roomId: string }) => {
+  const { user } = useUser();
+  if (!user || !user.id) {
+    return null;
+  }
+
+  const [message, setMessage] = useState("");
   const updateMyPresence = useUpdateMyPresence();
   const currentUser = useSelf();
   const others = useOthersMapped((other) => ({
     cursor: other.presence.cursor,
     info: other.info,
   }));
+
+  const messages = useStorage((root) =>
+    root.messages.filter((message) => message.roomId === roomId)
+  );
+
+  const addMessage = useMutation(({ storage }, content) => {
+    storage
+      .get("messages")
+      .push(
+        new LiveObject({ content: content, roomId: roomId, senderId: user.id })
+      );
+  }, []);
 
   return (
     <main
@@ -89,6 +120,51 @@ const Chat = ({ roomId }: { roomId: string }) => {
         </AvatarGroup>
       </div>
 
+      <div className="flex flex-col gap-y-2 w-full mt-[80px] px-2">
+        {messages.map((message, index) => {
+          return (
+            <div
+              key={index}
+              className={`w-full flex ${
+                message.senderId === user.id && "items-end justify-end"
+              }`}
+            >
+              <div
+                className={`${
+                  message.senderId === user.id && "bg-blue-500 text-white"
+                } w-fit min-w-[100px] flex items-center justify-center p-3 rounded-full ${
+                  message.senderId !== user.id && "bg-neutral-700 text-white"
+                }`}
+              >
+                {message.content}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="w-full px-4 mb-2 bottom-2 fixed flex flex-col gap-y-1">
+        <SomeoneIsTyping />
+        <Input
+          className="w-full"
+          size="sm"
+          placeholder="Type Your Message Here"
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+            updateMyPresence({ isTyping: true });
+          }}
+          onKeyDown={(e) => {
+            if (message && e.key === "Enter") {
+              updateMyPresence({ isTyping: false });
+              addMessage(message);
+              setMessage("");
+            }
+          }}
+          onBlur={() => updateMyPresence({ isTyping: false })}
+        />
+      </div>
+
       {others.map(([id, other]) => {
         if (other.cursor == null) {
           return null;
@@ -104,5 +180,17 @@ const Chat = ({ roomId }: { roomId: string }) => {
         );
       })}
     </main>
+  );
+};
+
+const SomeoneIsTyping = () => {
+  const someoneIsTyping = useOthers((others) =>
+    others.some((other) => other.presence.isTyping)
+  );
+
+  return (
+    <div className="font-semibold text-base text-blue-400">
+      {someoneIsTyping ? "Someone is typing..." : ""}
+    </div>
   );
 };

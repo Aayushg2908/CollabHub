@@ -64,6 +64,7 @@ export const Room = ({ roomId }: { roomId: string }) => {
         todos: new LiveList(),
         layers: new LiveMap<string, LiveObject<Layer>>(),
         layerIds: new LiveList(),
+        messages: new LiveList(),
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>

@@ -28,12 +28,19 @@ type Storage = {
   todos: LiveList<LiveObject<Todo>>;
   layers: LiveMap<string, LiveObject<Layer>>;
   layerIds: LiveList<string>;
+  messages: LiveList<LiveObject<Message>>;
 };
 
 type Todo = {
   roomId: string;
   text: string;
   checked?: boolean;
+};
+
+type Message = {
+  roomId: string;
+  content: string;
+  senderId: string;
 };
 
 type UserMeta = {

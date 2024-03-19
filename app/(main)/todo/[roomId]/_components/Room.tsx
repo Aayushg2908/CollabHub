@@ -43,6 +43,7 @@ export const Room = ({ room }: { room: PrismaRoom }) => {
         todos: new LiveList(),
         layers: new LiveMap<string, LiveObject<Layer>>(),
         layerIds: new LiveList<string>(),
+        messages: new LiveList(),
       }}
     >
       <ClientSideSuspense fallback={<Loading />}>

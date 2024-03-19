@@ -29,3 +29,7 @@
     pointer-events: none;
     font: #ffffff
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
