@@ -12,7 +12,6 @@ import {
   useUpdateMyPresence,
 } from "@/liveblocks.config";
 import { Layer } from "@/types";
-import { useUser } from "@clerk/nextjs";
 import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import {
@@ -22,7 +21,6 @@ import {
   Snippet,
   Tooltip,
 } from "@nextui-org/react";
-import { redirect } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];

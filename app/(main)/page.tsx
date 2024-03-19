@@ -1,4 +1,10 @@
-import { Code, ListTodo, Presentation, Type } from "lucide-react";
+import {
+  Code,
+  ListTodo,
+  Presentation,
+  Type,
+  MessageCircleMore,
+} from "lucide-react";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { cn } from "@/lib/utils";
@@ -34,6 +40,12 @@ export default function Home() {
       icon: ListTodo,
       description: "A collaborative todo list to mantain your daily tasks.",
       className: "text-green-600",
+    },
+    {
+      name: "Chat",
+      icon: MessageCircleMore,
+      description: "A collaborative chat to communicate with your friends.",
+      className: "text-yellow-600",
     },
   ];
 
@@ -83,7 +95,7 @@ export default function Home() {
             <MotionDiv
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: index * 0.2 }}
+              transition={{ duration: 1, delay: index * 0.1 }}
               key={index}
             >
               <Card
