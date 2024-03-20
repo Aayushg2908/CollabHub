@@ -8,7 +8,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { ROOMTYPE } from "@prisma/client";
-import { EditIcon, MoreVertical, Trash2Icon } from "lucide-react";
+import { Copy, EditIcon, MoreVertical, Trash2Icon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import {
@@ -21,6 +21,7 @@ import {
   useDisclosure,
   Input,
 } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 
 export const Actions = ({
   roomId,
@@ -33,10 +34,17 @@ export const Actions = ({
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [updatedRoomName, setUpdatedRoomName] = useState(roomName);
+  const pathname = usePathname();
 
   useEffect(() => {
     setUpdatedRoomName(roomName);
   }, [roomName]);
+
+  const handleCopy = () => {
+    const url = "https://collab-hub-one.vercel.app" + pathname + "/" + roomId;
+    navigator.clipboard.writeText(url);
+    toast.success("Room Id copied to clipboard");
+  };
 
   return (
     <>
@@ -51,6 +59,13 @@ export const Actions = ({
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
+          <DropdownItem
+            onClick={handleCopy}
+            startContent={<Copy className="w-5 h-5" />}
+            key="edit"
+          >
+            Copy Room Id
+          </DropdownItem>
           <DropdownItem
             onClick={onOpen}
             startContent={<EditIcon className="w-5 h-5" />}
