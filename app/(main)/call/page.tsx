@@ -22,7 +22,7 @@ const CallPage = async () => {
             content={`There are ${room.users.length} users in the room`}
           >
             <Link
-              href={`/chat/${room.id}`}
+              href={`/call/${room.id}`}
               className="border bg-neutral-800 transition-all rounded-md min-w-[120px] w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl p-1 relative"
             >
               {room.name}
@@ -44,7 +44,7 @@ const CallPage = async () => {
             content={`There are ${room.users.length} users in the room`}
           >
             <Link
-              href={`/chat/${room.id}`}
+              href={`/call/${room.id}`}
               key={room.id}
               className="border min-w-[120px] bg-neutral-800 transition-all rounded-md w-fit h-[130px] flex items-center justify-center cursor-pointer font-bold text-xl overflow-hidden p-1 relative"
             >
