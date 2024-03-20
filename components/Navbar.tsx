@@ -40,6 +40,10 @@ export const MainNavbar = () => {
       name: "Chat",
       link: "/chat",
     },
+    {
+      name: "Call",
+      link: "/call",
+    },
   ];
 
   return (

@@ -4,6 +4,7 @@ import {
   Presentation,
   Type,
   MessageCircleMore,
+  Video,
 } from "lucide-react";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
@@ -46,6 +47,13 @@ export default function Home() {
       icon: MessageCircleMore,
       description: "A collaborative chat to communicate with your friends.",
       className: "text-yellow-600",
+    },
+    {
+      name: "Call",
+      icon: Video,
+      description:
+        "A collaborative video/audio call to communicate with your friends.",
+      className: "text-cyan-500",
     },
   ];
 
