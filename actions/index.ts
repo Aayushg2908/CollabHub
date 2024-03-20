@@ -5,6 +5,11 @@ import { auth } from "@clerk/nextjs";
 import { ROOMTYPE } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Liveblocks } from "@liveblocks/node";
+
+const liveblocks = new Liveblocks({
+  secret: process.env.LIVEBLOCKS_SECRET_KEY!,
+});
 
 export const deleteRoom = async (roomId: string, type: ROOMTYPE) => {
   const { userId } = auth();
@@ -18,6 +23,10 @@ export const deleteRoom = async (roomId: string, type: ROOMTYPE) => {
       type: type,
     },
   });
+
+  if (type !== "CALL") {
+    await liveblocks.deleteRoom(roomId);
+  }
 
   revalidatePath(`/${type.toLowerCase()}`);
 };
