@@ -21,6 +21,7 @@ import {
   Snippet,
   Tooltip,
 } from "@nextui-org/react";
+import { Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];
@@ -80,6 +81,11 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const deleteMessage = useMutation(({ storage }, index) => {
+    const message = storage.get("messages").get(index);
+    message?.set("isDeleted", true);
   }, []);
 
   return (
@@ -98,9 +104,9 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
           cursor: null,
         })
       }
-      className="h-screen w-full relative touch-none flex flex-col overflow-hidden"
+      className="h-screen w-full relative touch-none flex flex-col overflow-scroll"
     >
-      <div className="w-full absolute top-0 flex justify-between items-center max-[419px]:flex-col max-[419px]:gap-y-1">
+      <div className="w-full fixed top-[65px] flex justify-between items-center max-[419px]:flex-col max-[419px]:gap-y-1">
         <Snippet symbol="">
           https://collab-hub-one.vercel.app/chat/{roomId}
         </Snippet>
@@ -136,18 +142,28 @@ const Chat = ({ roomId, userId }: { roomId: string; userId: string }) => {
               <div
                 className={`${
                   message.senderId === userId && "bg-blue-500 text-white"
-                } w-fit min-w-[100px] flex items-center justify-center p-3 rounded-full ${
+                } w-fit min-w-[100px] flex items-center justify-center p-3 gap-x-2 rounded-full ${
                   message.senderId !== userId && "bg-neutral-700 text-white"
                 }`}
               >
-                {message.content}
+                {message.isDeleted ? (
+                  "This Message was deleted"
+                ) : (
+                  <span>{message.content}</span>
+                )}
+                {userId === message.senderId && (
+                  <Trash2
+                    onClick={() => deleteMessage(index)}
+                    className="w-5 h-5 fill-red-500 cursor-pointer"
+                  />
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      <div ref={ref} />
+      <div ref={ref} className="mb-[100px]" />
 
       <div className="w-full px-4 mb-2 bottom-2 fixed flex flex-col gap-y-1">
         <SomeoneIsTyping />

@@ -41,6 +41,7 @@ type Message = {
   roomId: string;
   content: string;
   senderId: string;
+  isDeleted?: boolean;
 };
 
 type UserMeta = {
