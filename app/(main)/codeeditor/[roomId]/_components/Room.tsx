@@ -11,7 +11,13 @@ import {
   useUpdateMyPresence,
 } from "@/liveblocks.config";
 import { ClientSideSuspense } from "@liveblocks/react";
-import { Avatar, AvatarGroup, Snippet, Tooltip } from "@nextui-org/react";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  Snippet,
+  Tooltip,
+} from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import * as Y from "yjs";
 import LiveblocksProvider from "@liveblocks/yjs";
@@ -66,7 +72,7 @@ const MainRoom = ({ roomId }: { roomId: string }) => {
           cursor: null,
         })
       }
-      className="relative flex flex-col h-full w-full items-center overflow-hidden"
+      className="relative flex flex-col h-full w-full items-center"
     >
       <Snippet symbol="" className="absolute top-0 mt-10">
         https://collab-hub-one.vercel.app/codeeditor/{roomId}
@@ -116,6 +122,8 @@ const CollaborativeEditor = () => {
   const room = useRoom();
   const [provider, setProvider] = useState<TypedLiveblocksProvider>();
   const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
+  const [runningCode, setRunningCode] = useState(false);
+  const [output, setOutput] = useState("");
 
   useEffect(() => {
     let yProvider: TypedLiveblocksProvider;
@@ -147,9 +155,37 @@ const CollaborativeEditor = () => {
     setEditorRef(e);
   }, []);
 
+  const handleCodeRun = async () => {
+    if (editorRef) {
+      setRunningCode(true);
+      const code = editorRef.getValue();
+      const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "typescript",
+          version: "5.0.3",
+          files: [
+            {
+              content: code,
+            },
+          ],
+        }),
+      });
+      const data = await response.json();
+      setOutput(data.run.stdout);
+      setRunningCode(false);
+    }
+  };
+
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="w-full flex items-center justify-center">
+    <div className="w-full h-full flex flex-col pb-10">
+      <div className="w-full flex items-center justify-center gap-x-2">
+        <Button disabled={runningCode} onClick={handleCodeRun} color="primary">
+          {runningCode ? "Running..." : "Run"}
+        </Button>
         {editorRef ? <Toolbar editor={editorRef} /> : null}
       </div>
       <div className="relative flex-grow mt-2">
@@ -165,6 +201,16 @@ const CollaborativeEditor = () => {
           }}
         />
       </div>
+      {output && (
+        <div className="mt-4 flex flex-col">
+          <h1>Output:</h1>
+          <div className="flex-grow mt-2">
+            <div className="text-white bg-gray-800 p-4 rounded-md">
+              <pre className="w-fit">{output}</pre>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
