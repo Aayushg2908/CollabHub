@@ -1,5 +1,5 @@
-import { joinCodeEditorRoom } from "@/actions/codeeditor";
 import { Room } from "./_components/Room";
+import { joinRoom } from "@/actions";
 
 const CodeEditorRoomPage = async ({
   params,
@@ -7,7 +7,7 @@ const CodeEditorRoomPage = async ({
   params: { roomId: string };
 }) => {
   const { roomId } = params;
-  await joinCodeEditorRoom(roomId);
+  await joinRoom(roomId, "CODEEDITOR");
 
   return (
     <div className="w-full h-full">

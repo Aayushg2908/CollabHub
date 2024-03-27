@@ -1,6 +1,6 @@
 "use client";
 
-import { createCallRoom } from "@/actions/call";
+import { createRoom } from "@/actions";
 import {
   Modal,
   ModalContent,
@@ -12,10 +12,12 @@ import {
   Input,
 } from "@nextui-org/react";
 import { PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const CreateCallRoom = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [roomName, setRoomName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -81,8 +83,9 @@ export const CreateCallRoom = () => {
                       );
                     }
                     try {
-                      const room = await createCallRoom(roomName);
+                      const room = await createRoom(roomName, "CALL");
                       toast.success("Room created successfully!");
+                      router.push(`/call/${room.id}`);
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

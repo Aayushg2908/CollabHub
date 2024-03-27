@@ -1,6 +1,6 @@
 "use client";
 
-import { createWhiteboardRoom } from "@/actions/whiteboard";
+import { createRoom } from "@/actions";
 import {
   Modal,
   ModalContent,
@@ -83,7 +83,7 @@ export const CreateWhiteboardRoom = () => {
                       );
                     }
                     try {
-                      const room = await createWhiteboardRoom(roomName);
+                      const room = await createRoom(roomName, "WHITEBOARD");
                       toast.success("Room created successfully!");
                       router.push(`/whiteboard/${room.id}`);
                     } catch (error) {

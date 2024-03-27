@@ -1,6 +1,6 @@
 "use client";
 
-import { createTodoRoom } from "@/actions/todo";
+import { createRoom } from "@/actions";
 import {
   Modal,
   ModalContent,
@@ -83,7 +83,7 @@ export const CreateTodoRoom = () => {
                       );
                     }
                     try {
-                      const room = await createTodoRoom(roomName);
+                      const room = await createRoom(roomName, "TODO");
                       toast.success("Room created successfully!");
                       router.push(`/todo/${room.id}`);
                     } catch (error) {

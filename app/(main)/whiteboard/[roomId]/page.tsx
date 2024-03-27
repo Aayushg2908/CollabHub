@@ -1,6 +1,6 @@
-import { joinWhiteboardRoom } from "@/actions/whiteboard";
 import React from "react";
 import { Room } from "./_components/Room";
+import { joinRoom } from "@/actions";
 
 const WhiteboardRoomIdPage = async ({
   params,
@@ -8,7 +8,7 @@ const WhiteboardRoomIdPage = async ({
   params: { roomId: string };
 }) => {
   const { roomId } = params;
-  await joinWhiteboardRoom(roomId);
+  await joinRoom(roomId, "WHITEBOARD");
 
   return (
     <div className="w-full h-full">

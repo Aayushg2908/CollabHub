@@ -1,7 +1,6 @@
 "use client";
 
-import { createTextEditorRoom } from "@/actions/texteditor";
-import { createTodoRoom } from "@/actions/todo";
+import { createRoom } from "@/actions";
 import {
   Modal,
   ModalContent,
@@ -84,7 +83,7 @@ export const CreateTextEditorRoom = () => {
                       );
                     }
                     try {
-                      const room = await createTextEditorRoom(roomName);
+                      const room = await createRoom(roomName, "TEXTEDITOR");
                       toast.success("Room created successfully!");
                       router.push(`/texteditor/${room.id}`);
                     } catch (error) {

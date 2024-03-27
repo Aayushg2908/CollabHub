@@ -1,7 +1,7 @@
-import { joinCallRoom } from "@/actions/call";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Room from "./_components/Room";
+import { joinRoom } from "@/actions";
 
 const CallByIdPage = async ({ params }: { params: { roomId: string } }) => {
   const user = await currentUser();
@@ -10,7 +10,7 @@ const CallByIdPage = async ({ params }: { params: { roomId: string } }) => {
   }
 
   const { roomId } = params;
-  await joinCallRoom(roomId);
+  await joinRoom(roomId, "CALL");
 
   return <Room roomId={roomId} username={user.username!} />;
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { createChatRoom } from "@/actions/chat";
+import { createRoom } from "@/actions";
 import {
   Modal,
   ModalContent,
@@ -83,7 +83,7 @@ export const CreateChatRoom = () => {
                       );
                     }
                     try {
-                      const room = await createChatRoom(roomName);
+                      const room = await createRoom(roomName, "CHAT");
                       toast.success("Room created successfully!");
                       router.push(`/chat/${room.id}`);
                     } catch (error) {

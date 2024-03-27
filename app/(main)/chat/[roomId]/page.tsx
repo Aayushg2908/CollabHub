@@ -1,7 +1,7 @@
-import { joinChatRoom } from "@/actions/chat";
 import { Room } from "./_components/Room";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { joinRoom } from "@/actions";
 
 const ChatByIdPage = async ({ params }: { params: { roomId: string } }) => {
   const { userId } = auth();
@@ -10,7 +10,7 @@ const ChatByIdPage = async ({ params }: { params: { roomId: string } }) => {
   }
 
   const { roomId } = params;
-  await joinChatRoom(roomId);
+  await joinRoom(roomId, "CHAT");
 
   return (
     <div className="w-full h-full">

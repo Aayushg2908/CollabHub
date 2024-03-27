@@ -11,6 +11,31 @@ const liveblocks = new Liveblocks({
   secret: process.env.LIVEBLOCKS_SECRET_KEY!,
 });
 
+export const createRoom = async (roomName: string, type: ROOMTYPE) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const createdRoom = await db.room.create({
+    data: {
+      name: roomName,
+      ownerId: userId,
+      type,
+      users: {
+        set: [userId],
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  revalidatePath(`/${type.toLowerCase()}`);
+
+  return createdRoom;
+};
+
 export const deleteRoom = async (roomId: string, type: ROOMTYPE) => {
   const { userId } = auth();
   if (!userId) {
@@ -25,7 +50,11 @@ export const deleteRoom = async (roomId: string, type: ROOMTYPE) => {
   });
 
   if (type !== "CALL") {
-    await liveblocks.deleteRoom(roomId);
+    try {
+      await liveblocks.deleteRoom(roomId);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   revalidatePath(`/${type.toLowerCase()}`);
@@ -52,4 +81,70 @@ export const updateRoom = async (
   });
 
   revalidatePath(`/${type.toLowerCase()}`);
+};
+
+export const getOwnedRooms = async (type: ROOMTYPE) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const rooms = await db.room.findMany({
+    where: {
+      ownerId: userId,
+      type,
+    },
+  });
+
+  return rooms;
+};
+
+export const getAllRooms = async (type: ROOMTYPE) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const rooms = await db.room.findMany({
+    where: {
+      users: {
+        has: userId,
+      },
+      type,
+    },
+  });
+
+  return rooms;
+};
+
+export const joinRoom = async (roomId: string, type: ROOMTYPE) => {
+  const { userId } = auth();
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  const room = await db.room.findUnique({
+    where: {
+      id: roomId,
+    },
+  });
+  if (!room) {
+    return redirect(`/${type.toLowerCase()}`);
+  }
+
+  const userAlreadyInRoom = room.users.includes(userId);
+  if (userAlreadyInRoom) {
+    return;
+  }
+
+  await db.room.update({
+    where: {
+      id: roomId,
+    },
+    data: {
+      users: {
+        set: [...room.users, userId],
+      },
+    },
+  });
 };

@@ -1,15 +1,13 @@
-import { getTodoRoomById, joinTodoRoom } from "@/actions/todo";
 import { Room } from "./_components/Room";
+import { joinRoom } from "@/actions";
 
 const TodoRoomIdPage = async ({ params }: { params: { roomId: string } }) => {
   const { roomId } = params;
-  await joinTodoRoom(roomId);
-
-  const todoRoom = await getTodoRoomById(roomId);
+  await joinRoom(roomId, "TODO");
 
   return (
     <div className="w-full h-full">
-      <Room room={todoRoom} />
+      <Room roomId={roomId} />
     </div>
   );
 };
