@@ -34,6 +34,7 @@
     "react-contenteditable": "^3.3.7",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
+    "stripe": "^15.8.0",
     "y-monaco": "^0.1.5",
     "y-protocols": "^1.0.6",
     "yjs": "^13.6.11"

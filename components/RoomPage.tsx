@@ -3,8 +3,12 @@ import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { Actions } from "./Actions";
 import { ROOMTYPE, Room } from "@prisma/client";
+import { checkSubscription } from "@/lib/subscription";
+import { getRoomLimitCount } from "@/lib/room-limit";
+import { FreeCounter } from "./FreeCounter";
+import ProButton from "./ProButton";
 
-const RoomPage = ({
+const RoomPage = async ({
   children,
   ownedRooms,
   allRooms,
@@ -17,8 +21,17 @@ const RoomPage = ({
 }) => {
   const { userId } = auth();
 
+  const roomLimitCount = await getRoomLimitCount();
+  const isPro = await checkSubscription();
+
   return (
     <div className="mt-10 w-full flex flex-col items-center">
+      {!isPro && (
+        <div className="w-full flex flex-col items-center mb-4">
+          <FreeCounter roomLimitCount={roomLimitCount} isPro={isPro} />
+          <ProButton />
+        </div>
+      )}
       <h1 className="font-bold text-3xl md:text-5xl text-center">
         Rooms created by you
       </h1>

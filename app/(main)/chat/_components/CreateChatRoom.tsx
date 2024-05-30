@@ -83,9 +83,13 @@ export const CreateChatRoom = () => {
                       );
                     }
                     try {
-                      const room = await createRoom(roomName, "CHAT");
-                      toast.success("Room created successfully!");
-                      router.push(`/chat/${room.id}`);
+                      const data = await createRoom(roomName, "CHAT");
+                      if(data.error) {
+                        return toast.error(data.error);
+                      } else if(data.data) {
+                        toast.success("Room created successfully!");
+                        router.push(`/chat/${data.data.id}`);
+                      }
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

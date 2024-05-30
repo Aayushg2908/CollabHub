@@ -83,9 +83,13 @@ export const CreateWhiteboardRoom = () => {
                       );
                     }
                     try {
-                      const room = await createRoom(roomName, "WHITEBOARD");
-                      toast.success("Room created successfully!");
-                      router.push(`/whiteboard/${room.id}`);
+                      const data = await createRoom(roomName, "WHITEBOARD");
+                      if(data.error) {
+                        return toast.error(data.error);
+                      } else if(data.data) {
+                        toast.success("Room created successfully!");
+                        router.push(`/whiteboard/${data.data.id}`);
+                      }
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

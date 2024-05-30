@@ -83,9 +83,13 @@ export const CreateTextEditorRoom = () => {
                       );
                     }
                     try {
-                      const room = await createRoom(roomName, "TEXTEDITOR");
-                      toast.success("Room created successfully!");
-                      router.push(`/texteditor/${room.id}`);
+                      const data = await createRoom(roomName, "TEXTEDITOR");
+                      if(data.error) {
+                        return toast.error(data.error);
+                      } else if(data.data) {
+                        toast.success("Room created successfully!");
+                        router.push(`/todo/${data.data.id}`);
+                      }
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {

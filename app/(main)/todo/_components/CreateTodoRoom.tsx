@@ -83,9 +83,13 @@ export const CreateTodoRoom = () => {
                       );
                     }
                     try {
-                      const room = await createRoom(roomName, "TODO");
-                      toast.success("Room created successfully!");
-                      router.push(`/todo/${room.id}`);
+                      const data = await createRoom(roomName, "TODO");
+                      if(data.error) {
+                        return toast.error(data.error);
+                      } else if(data.data) {
+                        toast.success("Room created successfully!");
+                        router.push(`/todo/${data.data.id}`);
+                      }
                     } catch (error) {
                       toast.error("Something went wrong!");
                     } finally {
