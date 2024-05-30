@@ -84,11 +84,11 @@ export const CreateCallRoom = () => {
                     }
                     try {
                       const data = await createRoom(roomName, "CALL");
-                      if(data.error) {
+                      if (data.error) {
                         return toast.error(data.error);
-                      } else if(data.data) {
+                      } else if (data.data) {
                         toast.success("Room created successfully!");
-                        router.push(`/chat/${data.data.id}`);
+                        router.push(`/call/${data.data.id}`);
                       }
                     } catch (error) {
                       toast.error("Something went wrong!");
