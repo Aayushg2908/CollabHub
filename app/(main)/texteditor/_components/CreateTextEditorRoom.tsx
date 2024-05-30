@@ -88,7 +88,7 @@ export const CreateTextEditorRoom = () => {
                         return toast.error(data.error);
                       } else if(data.data) {
                         toast.success("Room created successfully!");
-                        router.push(`/todo/${data.data.id}`);
+                        router.push(`/texteditor/${data.data.id}`);
                       }
                     } catch (error) {
                       toast.error("Something went wrong!");
