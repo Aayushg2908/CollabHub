@@ -10,19 +10,25 @@ const ProButton = () => {
 
   const onSubscribe = async () => {
     try {
-      setLoading(true); 
+      setLoading(true);
       const data = await upgradeToPro();
       window.location.href = data.url!;
     } catch (error) {
       toast.error("Something went wrong");
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
-  
-  return (
-    <Button disabled={loading} onClick={onSubscribe} className="bg-gradient-to-r from-blue-500 to-purple-500">Upgrade To Pro</Button>
-  )
-}
 
-export default ProButton
+  return (
+    <Button
+      disabled={loading}
+      onClick={onSubscribe}
+      className="bg-gradient-to-r from-blue-500 to-purple-500"
+    >
+      Upgrade To Pro
+    </Button>
+  );
+};
+
+export default ProButton;

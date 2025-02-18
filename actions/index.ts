@@ -7,7 +7,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { Liveblocks } from "@liveblocks/node";
 import { checkSubscription } from "@/lib/subscription";
-import { checkRoomLimit, decrementRoomLimit, incrementRoomLimit } from "@/lib/room-limit";
+import {
+  checkRoomLimit,
+  decrementRoomLimit,
+  incrementRoomLimit,
+} from "@/lib/room-limit";
 import { stripe } from "@/lib/stripe";
 
 const liveblocks = new Liveblocks({
@@ -42,7 +46,7 @@ export const createRoom = async (roomName: string, type: ROOMTYPE) => {
   });
 
   if (!isPro) {
-    await incrementRoomLimit(); 
+    await incrementRoomLimit();
   }
 
   revalidatePath(`/${type.toLowerCase()}`);
@@ -65,7 +69,7 @@ export const deleteRoom = async (roomId: string, type: ROOMTYPE) => {
     },
   });
 
-  if(!isPro) {
+  if (!isPro) {
     await decrementRoomLimit();
   }
 
@@ -170,23 +174,10 @@ export const joinRoom = async (roomId: string, type: ROOMTYPE) => {
 };
 
 export const upgradeToPro = async () => {
-  const {userId} = auth();
+  const { userId } = auth();
   const user = await currentUser();
-  if(!userId || !user) {
+  if (!userId || !user) {
     return redirect("/sign-in");
-  }
-
-  const userSubscription = await db.userSubscription.findUnique({
-    where: { userId },
-  });
-
-  if (userSubscription && userSubscription.stripeCustomerId) {
-    const stripeSession = await stripe.billingPortal.sessions.create({
-      customer: userSubscription.stripeCustomerId,
-      return_url: "https://collab-hub-one.vercel.app",
-    });
-
-    return { url: stripeSession.url };
   }
 
   const stripeSession = await stripe.checkout.sessions.create({
