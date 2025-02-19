@@ -184,7 +184,7 @@ export const upgradeToPro = async () => {
     success_url: "https://collab-hub-one.vercel.app",
     cancel_url: "https://collab-hub-one.vercel.app",
     payment_method_types: ["card"],
-    mode: "subscription",
+    mode: "payment",
     billing_address_collection: "auto",
     customer_email: user.emailAddresses[0].emailAddress,
     line_items: [
@@ -193,12 +193,9 @@ export const upgradeToPro = async () => {
           currency: "USD",
           product_data: {
             name: "CollabHub Pro",
-            description: "Unlimited Room Creation",
+            description: "1 Month Pro Access",
           },
           unit_amount: 6000,
-          recurring: {
-            interval: "month",
-          },
         },
         quantity: 1,
       },
