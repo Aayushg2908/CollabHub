@@ -23,40 +23,38 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session;
 
   if (event.type === "checkout.session.completed") {
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
-    );
-
     if (!session?.metadata?.userId) {
       return new NextResponse("User id is required", { status: 400 });
     }
 
     const userSubscription = await db.userSubscription.findUnique({
       where: {
-        stripeSubscriptionId: subscription.id,
+        userId: session?.metadata?.userId,
       },
     });
     if (!userSubscription) {
       await db.userSubscription.create({
         data: {
           userId: session?.metadata?.userId,
-          stripeSubscriptionId: subscription.id,
-          stripeCustomerId: subscription.customer as string,
-          stripePriceId: subscription.items.data[0].price.id,
+          stripeSubscriptionId: session.id,
+          stripeCustomerId: session.customer as string,
+          stripePriceId: session.amount_total
+            ? String(session.amount_total / 100)
+            : null,
           stripeCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000
+            Date.now() + 30 * 24 * 60 * 60 * 1000
           ),
         },
       });
     } else {
       await db.userSubscription.update({
         where: {
-          stripeSubscriptionId: subscription.id,
+          stripeSubscriptionId: session.id,
         },
         data: {
-          stripePriceId: subscription.items.data[0].price.id,
+          stripePriceId: session.amount_total?.toString(),
           stripeCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000
+            Date.now() + 30 * 24 * 60 * 60 * 1000
           ),
         },
       });
